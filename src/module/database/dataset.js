@@ -43,7 +43,7 @@ class inter_dataset{
 			chosen: this.chosen
 		}
 		//console.log(table.userName + " " + table.testId + " " + table.picLeft + " " + table.picRight + " " + table.chosen);
-		return table;
+		return table; 
 	}
 }
 export {inter_dataset}
