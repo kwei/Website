@@ -1,6 +1,7 @@
 import {inter_dataset} from '../module/database/dataset.js';
 import Terminal from 'terminal-in-react';
 
+var interface_database = new inter_dataset();
 //var mongo = require('mongodb');
 
 var topics = [
@@ -17,9 +18,22 @@ var topics = [
 	"Sports"
 ];
 
-function click_func(side){
-	console.log('You click the ' + side + ' picture.');
+var counter = 0;
+function click_func(dataset){
+	console.log('You click the ' + dataset.chosen + ' picture.');
 	// get the chosen info
+	counter += 1;
+	var data = {
+		userName: dataset.userName,
+		testId: counter,
+		picLeft: dataset.picLeft,
+		picRight: dataset.picRight,
+		chosen: dataset.chosen
+	}
+	interface_database.setTable(data);
+	var table = interface_database.getTable();
+	//console.log(table.userName + " " + table.testId + " " + table.picLeft + " " + table.picRight + " " + table.chosen);
+	return table;
 }
 export {click_func}
 
@@ -51,7 +65,9 @@ function getImgs(imgpath1, imgpath2){
 
 	var imgset = {
 		imgsrc1,
-		imgsrc2
+		imgsrc2,
+		randtopic1, 
+		randtopic2
 	}
 	return imgset;
 }

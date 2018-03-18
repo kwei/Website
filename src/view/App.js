@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import Myterminal from './consoleTerminal';
+//import Myterminal from './consoleTerminal';
+import Snackbar from 'material-ui/Snackbar';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import RaisedButton from 'material-ui/RaisedButton';
 import '../css/App.css';
 import {
   click_func,
@@ -14,8 +19,14 @@ class App extends Component {
     this.state = {
       chosen : ' ',
       imgsrc1 : require('../module/img/Bedding/15.jpg'),
+      randtopic1 : 'Bedding',
       imgsrc2 : require('../module/img/Children/15.jpg'),
-      submit : null
+      randtopic2 : 'Children',
+      submit : null,
+      submit_open: false,
+      left_open: false,
+      right_open: false,
+      msg : ''
     }
   }
 
@@ -24,30 +35,47 @@ class App extends Component {
   btonClick = function(side){
     if(side === 'left' || side === 'right'){
       this.setState({chosen: side});
-      click_func(side);
+      var dataset = {
+        userName: 'KW',
+        testId: 0,
+        picLeft: this.state.randtopic1,
+        picRight: this.state.randtopic2,
+        chosen: side
+      }
+      var table = click_func(dataset);
+      this.setState({
+        msg: table.userName + " #" + table.testId + "  [ " + table.picLeft + " / " + table.picRight + " ] chosen: " + table.chosen,
+      });
       var imgset = getImgs(this.state.imgsrc1, this.state.imgsrc2);
       this.setState({
         imgsrc1 : imgset.imgsrc1,
         imgsrc2 : imgset.imgsrc2,
+        randtopic1 : imgset.randtopic1,
+        randtopic2 : imgset.randtopic2,
+        chosen : side,
       });
-    }else if(side === 'btsubmit'){
-      console.log('button clicked!');
+    }else if(side == 'submit'){
       this.setState({
-        submit : 'button clicked!'
+        submit_open: true,
       });
-      setTimeout(()=>{
-        this.setState({
-          submit : null
-        });
-      }, 5000);
     }
   }
+
+  handleRequestClose = () => {
+    this.setState({
+      submit_open: false,
+      left_open: false,
+      right_open: false,
+    });
+  };
 
   componentWillMount(){
     var imgset = getImgs(this.state.imgsrc1, this.state.imgsrc2);
       this.setState({
         imgsrc1 : imgset.imgsrc1,
         imgsrc2 : imgset.imgsrc2,
+        randtopic1 : imgset.randtopic1,
+        randtopic2 : imgset.randtopic2,
       });
   }
 
@@ -77,12 +105,17 @@ class App extends Component {
           </div>
         </div>
         <div className="btbox">
-          <button className="button_submit" onClick={()=>this.btonClick('btsubmit')} alt="btsubmit">Submit</button>
-        </div>
-        <div className="terminalbox">
-          <div className="terminal">
-            <Myterminal />
-          </div>
+          <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+            <RaisedButton
+              onClick={()=>this.btonClick('submit')}
+              label="Submit"/>
+            <Snackbar
+              className="snackbar"
+              open={this.state.submit_open}
+              message={this.state.msg}
+              autoHideDuration={4000}
+              onRequestClose={this.handleRequestClose}/>
+          </MuiThemeProvider>
         </div>
         <div className="right-blank"></div>
         <div className="footer">
