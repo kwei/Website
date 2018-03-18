@@ -26,21 +26,49 @@
   background-color: #fff;
   height: 180px;
   padding: 10px;
-  margin-top: 120px;
+  margin-top: 60px;
 }
 
 .left-img {
   float: left;
   margin-left: 70px;
   border-width: 10px;
-  border-color: #222;
+  background-color: #fff;
 }
 
 .right-img {
   float: right;
   margin-right: 70px;
   border-width: 10px;
-  border-color: #222;
+  background-color: #fff;
+}
+
+.btbox {
+
+}
+
+.button_submit {
+
+}
+
+.terminalbox{
+  height: 100px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.terminal{
+  width: 100%;
+  padding: 10px;
+  height: 100px;
+  margin-top: 20px;
+}
+
+.right-blank{
+  float: right;
+  padding: 10px;
+  height: 100px;
+  margin-top: 20px;
 }
 
 .footer {
@@ -48,7 +76,7 @@
   height: 130px;
   padding: 10px;
   color: white;
-  margin-top: 120px;
+  margin-top: 30px;
 }
 
 .footer-title {
